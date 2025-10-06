@@ -2,6 +2,16 @@ include(FetchContent)
 include(FindAVX)
 add_library(trigdx reference.cpp lookup.cpp)
 
+if(HAVE_AVX)
+    target_compile_definitions(trigdx PUBLIC HAVE_AVX)
+    target_compile_options(trigdx PUBLIC -mavx)
+endif()
+
+if(HAVE_AVX2)
+    target_compile_definitions(trigdx PUBLIC HAVE_AVX2)
+    target_compile_options(trigdx PUBLIC -mavx2)
+endif()
+
 target_include_directories(trigdx PUBLIC ${PROJECT_SOURCE_DIR}/include)
 
 if(HAVE_AVX)
